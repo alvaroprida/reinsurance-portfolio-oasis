@@ -17,6 +17,7 @@ export function Method({ data }: { data: SiteData }) {
         <pre className="overflow-x-auto rounded-lg bg-banner p-3 text-[13px] leading-relaxed text-ink">{`# one-off setup: see the comments in pipeline/run_piwind.sh
 bash pipeline/run_piwind.sh
 python pipeline/export_results.py
+python pipeline/export_model.py
 cd web && npm ci && npm run dev`}</pre>
         <p className="mt-3 text-sm leading-relaxed text-ink-2">
           The ktools engine is not bundled with the oasislmf pip package, so it is installed separately. With the default of 8
