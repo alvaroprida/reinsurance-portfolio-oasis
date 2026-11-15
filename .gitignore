@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+node_modules/
+web/dist/
+# Third-party model clone and run directories (re-created by pipeline/run_piwind.sh)
+pipeline/OasisPiWind/
+pipeline/runs/
