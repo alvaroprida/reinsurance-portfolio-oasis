@@ -23,7 +23,7 @@ export function Exposure({ data, palette }: { data: SiteData; palette: Palette }
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <Stat label="Locations" value={locs.length} sub="One account, one peril (windstorm)" />
+        <Stat label="Locations" value={locs.length} sub="One account, wind and storm surge" />
         <Stat label="Total insured value" value={`£${fmt(total / 1e6, 1)}M`} sub="Building TIV; no contents or BI" />
         <Stat label="Largest location" value={`£${fmt(Math.max(...locs.map((l) => l.tiv)) / 1000, 0)}k`} sub="Sets the cap on any single-site loss" />
       </div>

@@ -5,7 +5,7 @@ from a cedant's exposure to gross, insured and net loss curves and, next, the te
 excess-of-loss layer, using the open-source [Oasis Loss Modelling Framework](https://github.com/OasisLMF).
 
 **Status: work in progress.** Results so far come from Oasis's PiWind demonstration model
-(10 buildings, UK windstorm), used to learn the framework. A model built from open hazard data
+(10 buildings; wind and storm surge), used to learn the framework. A model built from open hazard data
 and a larger synthetic portfolio come next.
 
 ## Layout
@@ -14,6 +14,7 @@ and a larger synthetic portfolio come next.
 |---|---|
 | `pipeline/run_piwind.sh` | Runs PiWind end-to-end with `oasislmf` (WSL2 / Linux). Setup steps are in its comments |
 | `pipeline/export_results.py` | Exports exposure and ORD outputs to `web/public/data/piwind.json` |
+| `pipeline/export_model.py` | Exports events, footprint and vulnerability to `web/public/data/model.json` |
 | `web/` | The tabbed site (React, Vite, ECharts, Tailwind) |
 
 `pipeline/OasisPiWind/` is a clone of the PiWind repo and is git-ignored.
@@ -23,6 +24,7 @@ and a larger synthetic portfolio come next.
 ```sh
 bash pipeline/run_piwind.sh          # Linux or WSL2, about 3 minutes
 python pipeline/export_results.py
+python pipeline/export_model.py
 cd web && npm ci && npm run dev
 ```
 

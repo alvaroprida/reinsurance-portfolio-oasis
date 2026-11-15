@@ -48,7 +48,7 @@ levels = ["gul", "il", "ri"]
 result = {
     "generated": date.today().isoformat(),
     "oasislmf": oasislmf.__version__,
-    "model": "PiWind (OasisLMF demonstration model, UK windstorm)",
+    "model": "PiWind (OasisLMF demonstration model, wind and storm surge)",
     "samples": settings.get("number_of_samples"),
     "locations": [
         {

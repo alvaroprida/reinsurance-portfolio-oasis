@@ -1,7 +1,7 @@
 {
  "generated": "2026-11-15",
  "oasislmf": "2.5.9",
- "model": "PiWind (OasisLMF demonstration model, UK windstorm)",
+ "model": "PiWind (OasisLMF demonstration model, wind and storm surge)",
  "samples": 10,
  "locations": [
   {

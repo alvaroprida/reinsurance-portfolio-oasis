@@ -26,6 +26,29 @@ export const LEVEL_LABEL: Record<Level, string> = {
   ri: 'Net of reinsurance',
 }
 
+/** Shape of public/data/model.json, written by pipeline/export_model.py. */
+export interface ModelData {
+  stats: { events: number; periods: number; occurrences: number; active_periods: number; events_per_year: number; footprint_events: number; area_perils: number }
+  site: { area_perils: Record<string, number>; vulnerability_id: number; occupancy: number }
+  hazard_rp: Record<string, { rp: number; intensity: number }[]>
+  top_event: { id: number; points: [number, number, number][]; site: [number, number] }
+  peril_names: Record<string, string>
+  curves: { id: number; peril: string; occupancy: number; x: number[]; mean: number[]; sd: number[] }[]
+  damage_bins: number[]
+  distribution: { intensity: number; mean: number; probs: number[] }[]
+}
+
+export function useModelData() {
+  const [model, setModel] = useState<ModelData | null>(null)
+  useEffect(() => {
+    fetch('./data/model.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setModel)
+      .catch(() => setModel(null))
+  }, [])
+  return model
+}
+
 export function useSiteData() {
   const [data, setData] = useState<SiteData | null>(null)
   const [error, setError] = useState<string | null>(null)

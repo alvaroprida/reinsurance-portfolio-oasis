@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Exposure } from './components/Exposure'
+import { Hazard } from './components/Hazard'
 import { LossModel } from './components/LossModel'
 import { Method } from './components/Method'
 import { Overview } from './components/Overview'
 import { Planned } from './components/Planned'
 import { Reinsurance } from './components/Reinsurance'
-import { useSiteData } from './data'
+import { Vulnerability } from './components/Vulnerability'
+import { useModelData, useSiteData } from './data'
 import { usePalette } from './theme'
 
 const TABS = [
@@ -28,6 +30,7 @@ function initialTab(): TabKey {
 export default function App() {
   const { palette } = usePalette()
   const { data, error } = useSiteData()
+  const model = useModelData()
   const [tab, setTab] = useState<TabKey>(initialTab)
 
   useEffect(() => {
@@ -55,7 +58,7 @@ export default function App() {
 
       <div role="note" className="rounded-lg bg-banner px-4 py-2 text-sm text-ink">
         <strong>Work in progress.</strong> The results shown so far come from PiWind, Oasis's demonstration model (10 buildings,
-        UK windstorm), used to learn the framework. Tabs marked "planned" will use a model built from open data. Illustrative
+        tropical-cyclone wind and storm surge over a small area of the UK), used to learn the framework. Tabs marked "planned" will use a model built from open data. Illustrative
         exercise on a synthetic portfolio, not a quote or a pricing opinion.
       </div>
 
@@ -74,30 +77,8 @@ export default function App() {
         <main className="min-w-0">
           {tab === 'overview' && <Overview data={data} go={go} />}
           {tab === 'exposure' && <Exposure data={data} palette={palette} />}
-          {tab === 'hazard' && (
-            <Planned
-              title="Hazard: event footprints and rates"
-              shows={[
-                'The stochastic event set: how many events, their annual rates, and the period-based occurrence (10,000 simulated years).',
-                'Footprint maps: hazard intensity per event and location, built from open data with CLIMADA.',
-                'Return-period hazard at the portfolio locations, checked against published values.',
-              ]}
-              oasis={['events.bin', 'occurrence.bin', 'footprint.bin / .idx', 'areaperil_dict']}
-              now="PiWind ships a toy 1-in-N windstorm footprint, so there is nothing meaningful to show yet."
-            />
-          )}
-          {tab === 'vulnerability' && (
-            <Planned
-              title="Vulnerability: damage curves and uncertainty"
-              shows={[
-                'Mean damage ratio against hazard intensity, by construction and occupancy class.',
-                'The damage distribution around the mean (secondary uncertainty), which drives the tail of the loss curve.',
-                'Sensitivity of the average annual loss to the choice of curve.',
-              ]}
-              oasis={['vulnerability.bin', 'damage_bin_dict.bin', 'items / coverages', 'model_settings.json']}
-              now="PiWind's curves are demonstration values, so the plots arrive with the open-data model."
-            />
-          )}
+          {tab === 'hazard' && (model ? <Hazard model={model} palette={palette} /> : <div className="p-8 text-ink-3">Loading…</div>)}
+          {tab === 'vulnerability' && (model ? <Vulnerability model={model} palette={palette} /> : <div className="p-8 text-ink-3">Loading…</div>)}
           {tab === 'loss' && <LossModel data={data} palette={palette} />}
           {tab === 'reinsurance' && <Reinsurance data={data} palette={palette} />}
           {tab === 'pricing' && (
